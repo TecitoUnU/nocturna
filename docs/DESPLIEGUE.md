@@ -55,6 +55,15 @@ npm run dev
 3. Ejecuta también `supabase/migrations/0002_categorias_iniciales.sql` (los
    temas del curso) y, si venías de una versión anterior del proyecto,
    `supabase/migrations/0003_temas_del_curso.sql`.
+
+   **Atajo**: `supabase/instalar-todo.sql` contiene las tres migraciones
+   concatenadas y se pega de una vez. Se regenera con `npm run sql` y se puede
+   comprobar antes de pegarlo con `npm run sql:validar`, que las ejecuta
+   contra un PostgreSQL real (PGlite) y verifica tablas, políticas RLS,
+   `is_admin()`, la columna de búsqueda y el bucket.
+
+   Todos los scripts son idempotentes: si algo falla a mitad, puedes corregirlo
+   y volver a lanzar el archivo completo sin romper nada.
 4. **Storage**: el primer script crea el bucket público `thumbnails` con un
    límite de 5 MB por archivo y los MIME types permitidos. Puedes revisarlo en
    **Storage → Buckets**.
