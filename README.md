@@ -38,8 +38,15 @@ clave pública y por las políticas de seguridad (RLS) de PostgreSQL.
 
 **Sitio público**
 
-- Portada editorial con la pieza destacada, catálogo con ritmo asimétrico
-  (no una cuadrícula de tarjetas idénticas), buscador en la cabecera, filtros por
+- **Portada = presentación del proyecto**: nombre de la página, propósito,
+  mensaje de bienvenida, presentación breve del curso de Precálculo, ficha del
+  proyecto (institución, asignatura, docente) y los **nombres completos de los
+  integrantes del grupo**.
+- **Menú de temas**: navegación principal hacia los distintos contenidos
+  (Álgebra, Funciones, Exponenciales y logaritmos, Trigonometría, Geometría
+  analítica, Números complejos), con el número de piezas de cada tema.
+- Catálogo editorial con la pieza destacada, retícula asimétrica (no una
+  cuadrícula de tarjetas idénticas), buscador en la cabecera, filtros por
   categoría y por etiqueta, y carga progresiva del listado.
 - Búsqueda por título, sin distinguir mayúsculas, con acentos ignorados y con
   un retraso breve de 300 ms mientras se escribe. Los resultados salen de
@@ -107,7 +114,8 @@ Decisiones importantes:
 En **SQL Editor → New query**, pega y ejecuta, en este orden:
 
 1. `supabase/migrations/0001_esquema_y_politicas.sql` (esquema, RLS, storage)
-2. `supabase/migrations/0002_categorias_iniciales.sql` (categorías de ejemplo)
+2. `supabase/migrations/0002_categorias_iniciales.sql` (temas del curso)
+3. `supabase/migrations/0003_temas_del_curso.sql` (sólo si venías de una versión anterior)
 
 Ambos scripts son idempotentes: se pueden volver a ejecutar sin romper nada.
 
@@ -190,13 +198,16 @@ el borrado y el bloqueo de escrituras anónimas.
 ```
 src/
   app/
-    (public)/          portada (catálogo, buscador, filtros)
+    (public)/          portada (presentación, temas, catálogo, buscador)
     watch/[slug]/      ficha de video
     studio/            panel privado (acceso, alta, edición, categorías)
     api/catalogo/      API de carga progresiva
   proxy.ts             sesión de Supabase + CSP con nonce (src/proxy.ts)
-  components/          interfaz (cabecera, buscador, tarjetas, reproductor…)
+  components/
+    presentacion.tsx   nombre, propósito, bienvenida, curso, grupo y menú
+    cabecera.tsx, buscador.tsx, tarjeta-video.tsx, reproductor.tsx…
   lib/
+    proyecto.ts        datos del proyecto: nombre, integrantes, temas y textos
     acciones/          acciones de servidor (sesión, videos, categorías)
     supabase/          clientes (público y con sesión)
     catalogo.ts        consultas al catálogo
@@ -210,6 +221,32 @@ supabase/
 tests/                 pruebas unitarias, doble de Supabase y prueba e2e
 docs/                  documentación ampliada
 ```
+
+### Antes de publicar: personalize el proyecto
+
+Todo el contenido de la presentación se edita en **un solo archivo**,
+`src/lib/proyecto.ts`:
+
+| Campo | Qué es | Estado actual |
+| --- | --- | --- |
+| `nombre` | Nombre del proyecto | `NOCTURNA` (o `NEXT_PUBLIC_SITE_NAME`) |
+| `tipo` | Subtítulo bajo el nombre | «Archivo audiovisual del curso de Precálculo» |
+| `institucion` | Institución | *marcador: «Institución»* |
+| `asignatura` | Asignatura | `Precálculo` |
+| `docente` | Docente | *marcador: «Docente»* |
+| `proposito` | Propósito de la página | redactado |
+| `presentacionCurso` | Presentación breve del curso | redactada |
+| `bienvenida` | Mensaje de bienvenida | redactado |
+| `integrantes` | **Nombres completos del grupo** | *marcadores: «Integrante 1…4»* |
+| `temas` | Menú de temas y su categoría | los 6 temas del curso |
+
+> Los **nombres de los integrantes**, la **institución** y el **docente** están
+> como marcadores de posición: sustitúyelos antes de entregar el proyecto.
+
+Las categorías de Supabase son los temas del curso
+(`supabase/migrations/0002_categorias_iniciales.sql`). Si ya habías aplicado la
+versión anterior de esa migración, ejecuta `0003_temas_del_curso.sql` y borra
+las categorías antiguas desde el panel (Estudio → Categorías).
 
 ---
 

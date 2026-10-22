@@ -1,11 +1,16 @@
 import Link from "next/link";
-import { connection } from "next/server";
-import { siteConfig } from "@/lib/config";
-import { listarCatalogo, listarCategorias, listarEtiquetas, obtenerVideoDestacado } from "@/lib/catalogo";
+import { proyecto } from "@/lib/proyecto";
+import {
+  listarCatalogo,
+  listarCategorias,
+  listarResumenCatalogo,
+  obtenerVideoDestacado,
+} from "@/lib/catalogo";
 import { normalizarBusqueda } from "@/lib/texto";
 import { TAMANO_PAGINA } from "@/lib/constantes";
 import { esPiezaGrande, spanEditorial } from "@/lib/rejilla";
 import { supabaseConfigurado } from "@/lib/supabase/cliente";
+import { Presentacion, Integrantes, MenuTemas } from "@/components/presentacion";
 import { Destacado } from "@/components/destacado";
 import { Filtros } from "@/components/filtros";
 import { TarjetaVideo } from "@/components/tarjeta-video";
@@ -17,13 +22,7 @@ function primerValor(valor: string | string[] | undefined): string {
   return valor ?? "";
 }
 
-// El catálogo se lee de Supabase en cada petición: nunca se prerenderiza.
-export const dynamic = "force-dynamic";
-
 export default async function PaginaPrincipal({ searchParams }: PageProps<"/">) {
-  // El catálogo se consulta en cada petición: la ruta nunca se prerenderiza.
-  await connection();
-
   const parametros = await searchParams;
 
   const busqueda = normalizarBusqueda(primerValor(parametros.q));
@@ -39,27 +38,24 @@ export default async function PaginaPrincipal({ searchParams }: PageProps<"/">) 
     );
   }
 
-  const [destacado, catalogo, categorias, etiquetas] = await Promise.all([
+  const [destacado, catalogo, categorias, resumen] = await Promise.all([
     obtenerVideoDestacado(),
     listarCatalogo({ busqueda, categoria, etiqueta, pagina }),
     listarCategorias(),
-    listarEtiquetas(),
+    listarResumenCatalogo(),
   ]);
 
   const hayFiltros = Boolean(busqueda || categoria || etiqueta);
+  const conteos = new Map(resumen.categorias.map((item) => [item.nombre, item.total]));
 
   return (
     <>
-      <section className="mx-auto max-w-[86rem] px-5 pt-16 md:px-8 md:pt-24">
-        <p className="kicker text-acento">{siteConfig.lema}</p>
-        <h1 className="titulo-editorial mt-5 max-w-4xl text-4xl text-hueso sm:text-5xl md:text-7xl">
-          Un archivo de imagen y sonido,{" "}
-          <span className="text-acento-tenue italic">seleccionado a mano</span>.
-        </h1>
-        <p className="mt-6 max-w-2xl text-base leading-relaxed text-hueso-tenue">
-          {siteConfig.descripcion}
-        </p>
-      </section>
+      <Presentacion />
+
+      <div className="mx-auto max-w-[86rem] px-5 md:px-8">
+        <Integrantes />
+        <MenuTemas conteos={conteos} />
+      </div>
 
       {destacado && !hayFiltros ? (
         <div className="mt-16 md:mt-24">
@@ -95,7 +91,7 @@ export default async function PaginaPrincipal({ searchParams }: PageProps<"/">) 
         <div className="mt-8">
           <Filtros
             categorias={categorias}
-            etiquetas={etiquetas}
+            etiquetas={resumen.etiquetas.slice(0, 14)}
             categoriaActual={categoria}
             etiquetaActual={etiqueta}
             busqueda={primerValor(parametros.q)}
@@ -149,8 +145,7 @@ export default async function PaginaPrincipal({ searchParams }: PageProps<"/">) 
           <p className="mt-16 border-t linea pt-6 text-xs leading-relaxed text-hueso-oscuro">
             Los videos se alojan en YouTube como material{" "}
             <span className="text-hueso-tenue">no listado</span>: cualquiera que reciba el enlace
-            puede verlos y compartirlos. El catálogo y sus metadatos son propios de{" "}
-            {siteConfig.nombre}.
+            puede verlos y compartirlos. El catálogo y sus metadatos son de {proyecto.nombre}.
           </p>
         ) : null}
 

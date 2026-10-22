@@ -160,24 +160,24 @@ try {
   const htmlInicio = await inicio.text();
   comprobar(inicio.status === 200, "La portada responde 200", `estado ${inicio.status}`);
   comprobar(
-    htmlInicio.includes("Eclipse sobre la ciudad"),
+    htmlInicio.includes("Dominio y rango de una funcion"),
     "La portada muestra el video publicado",
   );
   comprobar(
-    htmlInicio.includes("Material de archivo"),
+    htmlInicio.includes("Circunferencia trigonometrica"),
     "La portada muestra el segundo video publicado",
   );
   comprobar(
-    !htmlInicio.includes("Borrador privado del estudio"),
+    !htmlInicio.includes("Borrador del grupo"),
     "La portada NO muestra los borradores",
   );
 
   // --- Búsqueda ------------------------------------------------------------
-  const busqueda = await pedir("/?q=eclipse");
+  const busqueda = await pedir("/?q=dominio");
   const htmlBusqueda = await busqueda.text();
   comprobar(
-    htmlBusqueda.includes("Eclipse sobre la ciudad") &&
-      !htmlBusqueda.includes("Material de archivo"),
+    htmlBusqueda.includes("Dominio y rango de una funcion") &&
+      !htmlBusqueda.includes("Circunferencia trigonometrica"),
     "La búsqueda por título filtra correctamente",
   );
 
@@ -188,39 +188,39 @@ try {
     "La búsqueda avisa cuando no hay coincidencias",
   );
 
-  const porCategoria = await pedir("/?categoria=Documental");
+  const porCategoria = await pedir("/?categoria=Trigonometría");
   const htmlCategoria = await porCategoria.text();
   comprobar(
-    htmlCategoria.includes("Material de archivo") &&
-      !htmlCategoria.includes("Eclipse sobre la ciudad"),
+    htmlCategoria.includes("Circunferencia trigonometrica") &&
+      !htmlCategoria.includes("Dominio y rango de una funcion"),
     "El filtro por categoría funciona",
   );
 
-  const porEtiqueta = await pedir("/?etiqueta=luz");
+  const porEtiqueta = await pedir("/?etiqueta=dominio");
   const htmlEtiqueta = await porEtiqueta.text();
   comprobar(
-    htmlEtiqueta.includes("Eclipse sobre la ciudad") &&
-      !htmlEtiqueta.includes("Material de archivo"),
+    htmlEtiqueta.includes("Dominio y rango de una funcion") &&
+      !htmlEtiqueta.includes("Circunferencia trigonometrica"),
     "El filtro por etiqueta funciona",
   );
 
   // --- Ficha de video ------------------------------------------------------
-  const ficha = await pedir("/watch/eclipse-sobre-la-ciudad");
+  const ficha = await pedir("/watch/dominio-y-rango-de-una-funcion");
   const htmlFicha = await ficha.text();
   comprobar(ficha.status === 200, "La ficha del video responde 200");
-  comprobar(htmlFicha.includes("Eclipse sobre la ciudad"), "La ficha muestra el título");
+  comprobar(htmlFicha.includes("Dominio y rango de una funcion"), "La ficha muestra el título");
   comprobar(
     htmlFicha.includes("youtube-nocookie.com/embed/dQw4w9WgXcQ") ||
-      htmlFicha.includes("Reproducir Eclipse sobre la ciudad"),
+      htmlFicha.includes("Reproducir Dominio y rango de una funcion"),
     "La ficha ofrece el reproductor oficial de YouTube",
   );
   comprobar(htmlFicha.includes("Abrir en YouTube"), "La ficha enlaza con YouTube");
 
-  const borrador = await pedir("/watch/borrador-privado");
+  const borrador = await pedir("/watch/borrador-del-grupo");
   comprobar(borrador.status === 404, "Un borrador devuelve 404 en público");
 
   // --- API del catálogo ----------------------------------------------------
-  const api = await pedir("/api/catalogo?q=eclipse");
+  const api = await pedir("/api/catalogo?q=dominio");
   const datosApi = await api.json();
   comprobar(
     api.status === 200 && datosApi.videos.length === 1,
@@ -255,7 +255,7 @@ try {
     "El panel autenticado muestra la lista de piezas",
   );
   comprobar(
-    htmlAutenticado.includes("Borrador privado del estudio"),
+    htmlAutenticado.includes("Borrador del grupo"),
     "El administrador ve también los borradores",
   );
   comprobar(
@@ -278,7 +278,7 @@ try {
       youtube: "https://www.youtube.com/watch?v=ZZ11aa22bb3",
       titulo: "Pieza de prueba automatica",
       descripcion: "Creada por la prueba de extremo a extremo.",
-      categoria: "Ensayo",
+      categoria: "Funciones",
       etiquetas: "prueba, automatica",
       estado: "published",
     },
@@ -307,7 +307,7 @@ try {
       youtube: "https://vimeo.com/123456789",
       titulo: "Pieza con enlace invalido",
       descripcion: "No debería guardarse.",
-      categoria: "Ensayo",
+      categoria: "Funciones",
       etiquetas: "",
       estado: "draft",
     },

@@ -204,29 +204,53 @@ export async function listarCategorias(): Promise<FilaCategoria[]> {
 
 /** Etiquetas más frecuentes entre los videos publicados. */
 export async function listarEtiquetas(limite = 14): Promise<{ etiqueta: string; total: number }[]> {
+  const resumen = await listarResumenCatalogo();
+  return resumen.etiquetas.slice(0, limite);
+}
+
+/**
+ * Resumen del catálogo publicado: número de piezas por categoría y por
+ * etiqueta. Se resuelve con una sola consulta para no multiplicar las
+ * peticiones a la base de datos.
+ */
+export async function listarResumenCatalogo(): Promise<{
+  categorias: { nombre: string; total: number }[];
+  etiquetas: { etiqueta: string; total: number }[];
+}> {
+  const vacio = { categorias: [], etiquetas: [] };
+
   try {
     const supabase = crearClientePublico();
     const { data, error } = await supabase
       .from("videos")
-      .select("tags")
+      .select("category, tags")
       .eq("status", "published")
-      .limit(300);
+      .limit(500);
 
-    if (error) return [];
+    if (error) return vacio;
 
-    const contador = new Map<string, number>();
-    for (const fila of (data ?? []) as { tags: string[] }[]) {
+    const categorias = new Map<string, number>();
+    const etiquetas = new Map<string, number>();
+
+    for (const fila of (data ?? []) as { category: string | null; tags: string[] }[]) {
+      if (fila.category) {
+        categorias.set(fila.category, (categorias.get(fila.category) ?? 0) + 1);
+      }
       for (const etiqueta of fila.tags ?? []) {
-        contador.set(etiqueta, (contador.get(etiqueta) ?? 0) + 1);
+        etiquetas.set(etiqueta, (etiquetas.get(etiqueta) ?? 0) + 1);
       }
     }
 
-    return [...contador.entries()]
-      .map(([etiqueta, total]) => ({ etiqueta, total }))
-      .sort((a, b) => b.total - a.total || a.etiqueta.localeCompare(b.etiqueta))
-      .slice(0, limite);
+    return {
+      categorias: [...categorias.entries()]
+        .map(([nombre, total]) => ({ nombre, total }))
+        .sort((a, b) => b.total - a.total || a.nombre.localeCompare(b.nombre)),
+      etiquetas: [...etiquetas.entries()]
+        .map(([etiqueta, total]) => ({ etiqueta, total }))
+        .sort((a, b) => b.total - a.total || a.etiqueta.localeCompare(b.etiqueta)),
+    };
   } catch {
-    return [];
+    return vacio;
   }
 }
 

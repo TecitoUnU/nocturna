@@ -15,18 +15,18 @@ export function Cabecera() {
           <nav aria-label="Navegación principal" className="hidden md:block">
             <ul className="flex items-center gap-7 text-sm text-hueso-tenue">
               <li>
+                <Link href="/#presentacion" className="transition-colors hover:text-hueso">
+                  Presentación
+                </Link>
+              </li>
+              <li>
+                <Link href="/#temas" className="transition-colors hover:text-hueso">
+                  Temas
+                </Link>
+              </li>
+              <li>
                 <Link href="/#catalogo" className="transition-colors hover:text-hueso">
                   Catálogo
-                </Link>
-              </li>
-              <li>
-                <Link href="/#etiquetas" className="transition-colors hover:text-hueso">
-                  Etiquetas
-                </Link>
-              </li>
-              <li>
-                <Link href="/#destacado" className="transition-colors hover:text-hueso">
-                  Destacado
                 </Link>
               </li>
             </ul>

@@ -52,7 +52,9 @@ npm run dev
    se pausa tras una semana de inactividad, pero puedes restaurarla cuando
    quieras).
 2. **SQL Editor → New query**: ejecuta `supabase/migrations/0001_esquema_y_politicas.sql`.
-3. Ejecuta también `supabase/migrations/0002_categorias_iniciales.sql`.
+3. Ejecuta también `supabase/migrations/0002_categorias_iniciales.sql` (los
+   temas del curso) y, si venías de una versión anterior del proyecto,
+   `supabase/migrations/0003_temas_del_curso.sql`.
 4. **Storage**: el primer script crea el bucket público `thumbnails` con un
    límite de 5 MB por archivo y los MIME types permitidos. Puedes revisarlo en
    **Storage → Buckets**.
