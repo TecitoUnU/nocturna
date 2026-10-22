@@ -1,26 +1,221 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---------------------------------------------------------------------------
+   NOCTURNA · sistema visual
+   Fondo negro azulado, tipografía cálida y un único acento violeta eléctrico.
+   Todos los nombres de color son propios: cambiar la marca es cambiar este
+   bloque (y las variables de entorno del sitio).
+--------------------------------------------------------------------------- */
+
+@theme {
+  --color-noche-950: #05050a;
+  --color-noche-900: #09090f;
+  --color-noche-850: #0c0c14;
+  --color-noche-800: #11111a;
+  --color-noche-700: #171722;
+  --color-noche-600: #21212e;
+  --color-noche-500: #2e2e3d;
+
+  --color-hueso: #f4f0e6;
+  --color-hueso-tenue: #a8a2b6;
+  --color-hueso-oscuro: #6f6a7d;
+
+  --color-acento: #a855f7;
+  --color-acento-tenue: #cbb6ff;
+  --color-acento-hondo: #6d28d9;
+
+  --font-display: var(--fuente-display), ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: var(--fuente-texto), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--fuente-mono), ui-monospace, "SFMono-Regular", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-noche-900);
+    color: var(--color-hueso);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-acento);
+    color: #0a0a11;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-acento);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Etiqueta editorial pequeña (kicker) */
+  .kicker {
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Título de revista */
+  .titulo-editorial {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+  }
+
+  /* Hairline divisoria */
+  .linea {
+    border-color: color-mix(in srgb, var(--color-hueso) 12%, transparent);
+  }
+
+  .panel {
+    background-color: color-mix(in srgb, var(--color-noche-800) 88%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-hueso) 10%, transparent);
+    border-radius: 2px;
+  }
+
+  .boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    border-radius: 9999px;
+    padding: 0.7rem 1.35rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .boton-acento {
+    background-color: var(--color-acento);
+    color: #0a0a11;
+  }
+
+  .boton-acento:hover {
+    background-color: var(--color-acento-tenue);
+  }
+
+  .boton-linea {
+    border: 1px solid color-mix(in srgb, var(--color-hueso) 22%, transparent);
+    color: var(--color-hueso);
+  }
+
+  .boton-linea:hover {
+    border-color: var(--color-acento);
+    color: var(--color-acento-tenue);
+  }
+
+  .boton:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* Campos de formulario */
+  .campo {
+    width: 100%;
+    background-color: var(--color-noche-950);
+    border: 1px solid color-mix(in srgb, var(--color-hueso) 14%, transparent);
+    border-radius: 2px;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.9rem;
+    color: var(--color-hueso);
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease;
+  }
+
+  .campo::placeholder {
+    color: var(--color-hueso-oscuro);
+  }
+
+  .campo:hover {
+    border-color: color-mix(in srgb, var(--color-hueso) 24%, transparent);
+  }
+
+  .campo:focus {
+    border-color: var(--color-acento);
+    outline: none;
+  }
+
+  .campo-error {
+    border-color: #f87171;
+  }
+
+  .etiqueta-campo {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-hueso-tenue);
+    margin-bottom: 0.45rem;
+  }
+
+  /* Entrada suave del catálogo */
+  .animar-entrada {
+    animation: surgir 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    animation-delay: calc(var(--indice, 0) * 55ms);
+  }
+
+  .resplandor {
+    background:
+      radial-gradient(60% 55% at 78% 8%, rgba(168, 85, 247, 0.16), transparent 70%),
+      radial-gradient(45% 45% at 12% 92%, rgba(168, 85, 247, 0.08), transparent 72%);
+  }
+}
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes latido {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.cargando-pulso {
+  animation: latido 1.6s ease-in-out infinite;
 }
