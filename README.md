@@ -3,6 +3,9 @@
 Plataforma audiovisual personal: catálogo propio, buscador, fichas de video con
 reproductor integrado y un panel privado de administración.
 
+🌐 **Desplegada en producción**: <https://nocturna-mu.vercel.app>
+(plan Hobby de Vercel, subdominio gratuito, sin dominio comprado)
+
 Todo el proyecto funciona con **presupuesto cero** usando servicios con plan
 gratuito:
 

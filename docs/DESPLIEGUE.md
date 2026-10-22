@@ -141,8 +141,22 @@ Las mismas en local y en producción:
 
 ## 5. Publicar en Vercel (plan Hobby)
 
-1. `git init`, `git add .`, `git commit -m "NOCTURNA"` y sube el proyecto a
-   un repositorio.
+El proyecto ya está desplegado en **https://nocturna-mu.vercel.app**. Para
+repetirlo o actualizarlo:
+
+```bash
+VERCEL_TOKEN=tu_token npm run desplegar
+```
+
+El token se crea en <https://vercel.com/account/tokens> y sólo se lee de la
+variable de entorno (no se guarda en disco ni en el repositorio). El script
+comprueba la sesión, crea el proyecto si no existe, enlaza la carpeta, copia
+las variables `NEXT_PUBLIC_*` de `.env.local` (producción, preview y
+desarrollo) y despliega.
+
+### Alternativa: desde el panel de Vercel
+
+1. Sube el proyecto a un repositorio de Git.
 2. Vercel → **Add New… → Project** → importa el repositorio.
 3. Framework preset: **Next.js** (se detecta solo). Install command: `npm
    install`. Build command: `npm run build` (por defecto).
@@ -153,6 +167,10 @@ Las mismas en local y en producción:
    `https://nocturna-xyz.vercel.app`. No hay que comprar ningún dominio.
 6. Vuelve a Supabase → **Authentication → URL Configuration** y añade ese
    dominio a las URLs permitidas.
+
+> **Las variables `NEXT_PUBLIC_*` se incrustan al compilar.** Si cambias una
+> después del build, hay que volver a desplegar para que el cambio llegue al
+> navegador.
 
 ### Notas sobre el plan Hobby
 

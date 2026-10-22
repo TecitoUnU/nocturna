@@ -1,19 +1,21 @@
 # Archivos que no se suben al despliegue de Vercel.
-# El build se hace en Vercel: no hace falta node_modules ni .next.
-node_modules
-.next
-.git
-.gitignore
-.vercel
+# Ojo: los patrones empiezan por "/" para que sólo afecten a la raíz del
+# proyecto (sin la barra, "supabase" también excluiría src/lib/supabase).
+
+/node_modules
+/.next
+/.git
+/.gitignore
+/.vercel
 
 # Nunca subir variables de entorno con credenciales al despliegue.
-.env
-.env.*
-!.env.example
+/.env
+/.env.*
+!/.env.example
 
 # Documentación y utilidades de desarrollo: no hacen falta en producción.
-tests
-docs
-scripts
-supabase
-AGENTS.md
+/tests
+/docs
+/scripts
+/supabase
+/AGENTS.md
