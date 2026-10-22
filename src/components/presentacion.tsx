@@ -82,9 +82,12 @@ export function Presentacion() {
 }
 
 /**
- * Integrantes del grupo. Los nombres salen de `src/lib/proyecto.ts`.
+ * Integrantes del grupo. Los nombres salen de `src/lib/proyecto.ts`; las
+ * entradas todavía sin nombre no se muestran.
  */
 export function Integrantes() {
+  const integrantes = proyecto.integrantes.filter((integrante) => integrante.nombre.trim() !== "");
+
   return (
     <section aria-labelledby="titulo-integrantes" className="mt-20 md:mt-28">
       <div className="flex items-center gap-4">
@@ -99,29 +102,37 @@ export function Integrantes() {
         {proyecto.asignatura}.
       </p>
 
-      <ul className="mt-8 grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
-        {proyecto.integrantes.map((integrante, indice) => (
-          <li
-            key={integrante.nombre}
-            className="animar-entrada border-l linea pl-4"
-            style={{ "--indice": indice } as React.CSSProperties}
-          >
-            <p className="text-base text-hueso">{integrante.nombre}</p>
-            {integrante.rol ? (
-              <p className="mt-1 text-xs uppercase tracking-[0.16em] text-hueso-oscuro">
-                {integrante.rol}
-              </p>
-            ) : null}
-          </li>
-        ))}
-      </ul>
+      {integrantes.length === 0 ? (
+        <p className="panel mt-8 px-6 py-8 text-sm text-hueso-tenue">
+          Los nombres de los integrantes están pendientes de añadirse en{" "}
+          <code className="font-mono text-xs text-acento-tenue">src/lib/proyecto.ts</code>.
+        </p>
+      ) : (
+        <ul className="mt-8 grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
+          {integrantes.map((integrante, indice) => (
+            <li
+              key={integrante.nombre}
+              className="animar-entrada border-l linea pl-4"
+              style={{ "--indice": indice } as React.CSSProperties}
+            >
+              <p className="text-base text-hueso">{integrante.nombre}</p>
+              {integrante.rol ? (
+                <p className="mt-1 text-xs uppercase tracking-[0.16em] text-hueso-oscuro">
+                  {integrante.rol}
+                </p>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }
 
 /**
  * Menú de temas: navegación principal hacia los distintos contenidos del
- * catálogo. Cada tema enlaza a la sección del catálogo filtrada.
+ * catálogo, en forma de índice. Cada tema enlaza a la sección del catálogo
+ * filtrada por su categoría.
  */
 export function MenuTemas({
   conteos = new Map<string, number>(),
@@ -146,7 +157,7 @@ export function MenuTemas({
         </p>
       </div>
 
-      <ul className="mt-10 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-4 divide-y divide-[color-mix(in_srgb,var(--color-hueso)_10%,transparent)]">
         {proyecto.temas.map((tema, indice) => {
           const total = conteos.get(tema.categoria) ?? 0;
 
@@ -154,18 +165,21 @@ export function MenuTemas({
             <li key={tema.titulo} className="animar-entrada" style={{ "--indice": indice } as React.CSSProperties}>
               <Link
                 href={`/?categoria=${encodeURIComponent(tema.categoria)}#catalogo`}
-                className="group flex h-full flex-col border-t linea pt-5 transition-colors hover:border-acento"
+                className="group grid gap-2 py-6 md:grid-cols-12 md:items-baseline md:gap-6"
               >
-                <span className="kicker text-hueso-oscuro">
+                <span className="kicker text-hueso-oscuro md:col-span-1">
                   {String(indice + 1).padStart(2, "0")}
                 </span>
-                <h3 className="titulo-editorial mt-3 text-2xl text-hueso transition-colors group-hover:text-acento-tenue">
+
+                <h3 className="titulo-editorial text-2xl text-hueso transition-colors group-hover:text-acento-tenue md:col-span-4 md:text-[1.7rem]">
                   {tema.titulo}
                 </h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-hueso-tenue">
+
+                <p className="max-w-xl text-sm leading-relaxed text-hueso-tenue md:col-span-5">
                   {tema.descripcion}
                 </p>
-                <span className="mt-5 inline-flex items-center gap-2 text-xs text-hueso-oscuro transition-colors group-hover:text-acento">
+
+                <span className="inline-flex items-center gap-2 text-xs text-hueso-oscuro transition-colors group-hover:text-acento md:col-span-2 md:justify-end">
                   {total > 0 ? `${total} ${total === 1 ? "pieza" : "piezas"}` : "Sin material aún"}
                   <span aria-hidden="true">→</span>
                 </span>

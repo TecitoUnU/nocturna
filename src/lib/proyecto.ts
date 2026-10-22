@@ -32,10 +32,10 @@ export const proyecto = {
   /** Subtítulo corto bajo el nombre. */
   tipo: "Archivo audiovisual del curso de Precálculo",
 
-  /** Datos de la asignatura: edita estos tres campos. */
-  institucion: "Institución",
+  /** Datos de la asignatura. */
+  institucion: "Universidad Mariano Galvez de Guatemala · Sede Jalapa",
   asignatura: "Precálculo",
-  docente: "Docente",
+  docente: "Jose Fernando Marroquin Rosa",
 
   /** Propósito de la página: qué resuelve y para qué. */
   proposito:
@@ -49,21 +49,54 @@ export const proyecto = {
   bienvenida:
     "Bienvenida, bienvenido. Si buscas un tema concreto, empieza por el buscador; si prefieres recorrer el material poco a poco, elige un tema en el menú de abajo y sigue desde ahí. Todos los videos están alojados en YouTube y el catálogo, los textos y las fichas son de este proyecto.",
 
-  /** Integrantes del grupo: sustituye los marcadores por los nombres reales. */
+  /**
+   * Integrantes del grupo. Deja el nombre completo de cada persona; los
+   * roles son opcionales. Las entradas sin nombre no se muestran en la web.
+   */
   integrantes: [
-    { nombre: "Integrante 1", rol: "Coordinación y edición" },
-    { nombre: "Integrante 2", rol: "Grabación y guion" },
-    { nombre: "Integrante 3", rol: "Material audiovisual" },
-    { nombre: "Integrante 4", rol: "Web y documentación" },
+    { nombre: "", rol: "Coordinación y edición" },
+    { nombre: "", rol: "Grabación y guion" },
+    { nombre: "", rol: "Material audiovisual" },
+    { nombre: "", rol: "Web y documentación" },
   ] satisfies Integrante[],
 
   /** Menú de temas: la navegación principal hacia los contenidos. */
   temas: [
     {
-      titulo: "Álgebra",
+      titulo: "Exponentes y radicales",
       descripcion:
-        "Ecuaciones, inecuaciones y sistemas: la herramienta con la que se resuelve casi todo lo demás.",
-      categoria: "Álgebra",
+        "Potencias, raíces y las reglas que permiten manipularlos sin perder de vista las restricciones del dominio.",
+      categoria: "Exponentes y radicales",
+    },
+    {
+      titulo: "Expresiones racionales",
+      descripcion:
+        "Fracciones algebraicas: simplificación, dominio y los valores que quedan fuera de la expresión.",
+      categoria: "Expresiones racionales",
+    },
+    {
+      titulo: "Ecuaciones",
+      descripcion:
+        "Ecuaciones de primer y segundo grado, y todo lo que se puede despejar sin perder soluciones.",
+      categoria: "Ecuaciones",
+    },
+    {
+      titulo: "Modelado con ecuaciones",
+      descripcion:
+        "Pasar de un problema con enunciado a una ecuación, y comprobar que la solución significa algo.",
+      categoria: "Modelado con ecuaciones",
+    },
+    {
+      titulo: "Geometría de coordenadas",
+      descripcion:
+        "El plano cartesiano como territorio: distancia, punto medio y circunferencias.",
+      categoria: "Geometría de coordenadas",
+    },
+    {
+      titulo: "Rectas",
+      descripcion:
+        "Ecuaciones de la recta, pendientes y ángulos entre rectas: la geometría con coordenadas.",
+      categoria: "Rectas",
     },
     {
       titulo: "Funciones",
@@ -72,24 +105,22 @@ export const proyecto = {
       categoria: "Funciones",
     },
     {
-      titulo: "Exponenciales y logaritmos",
-      descripcion: "Crecimiento, escalas y la operación que unifica todo el bloque.",
-      categoria: "Exponenciales y logaritmos",
+      titulo: "Análisis de funciones",
+      descripcion:
+        "Variaciones, límites y comportamiento asintótico: cómo se lee una función de largo.",
+      categoria: "Análisis de funciones",
     },
     {
-      titulo: "Trigonometría",
-      descripcion: "Círculo unitario, razones, identidades y ecuaciones trigonométricas.",
-      categoria: "Trigonometría",
+      titulo: "Funciones cuadráticas",
+      descripcion:
+        "Parábolas, vértice, eje de simetría y el papel del discriminante.",
+      categoria: "Funciones cuadráticas",
     },
     {
-      titulo: "Geometría analítica",
-      descripcion: "Rectas, circunferencias, cónicas y vectores en el plano cartesiano.",
-      categoria: "Geometría analítica",
-    },
-    {
-      titulo: "Números complejos",
-      descripcion: "Forma polar y forma exponencial, y cómo se leen en el plano.",
-      categoria: "Números complejos",
+      titulo: "Funciones polinomiales y ceros reales",
+      descripcion:
+        "Gráficas de polinomios, teorema del factor y búsqueda de ceros reales.",
+      categoria: "Funciones polinomiales y ceros reales",
     },
   ] satisfies Tema[],
 } as const;

@@ -8,10 +8,14 @@
 
 insert into public.categories (slug, name)
 values
-  ('algebra', 'Álgebra'),
+  ('exponentes-y-radicales', 'Exponentes y radicales'),
+  ('expresiones-racionales', 'Expresiones racionales'),
+  ('ecuaciones', 'Ecuaciones'),
+  ('modelado-con-ecuaciones', 'Modelado con ecuaciones'),
+  ('geometria-de-coordenadas', 'Geometría de coordenadas'),
+  ('rectas', 'Rectas'),
   ('funciones', 'Funciones'),
-  ('exponenciales-y-logaritmos', 'Exponenciales y logaritmos'),
-  ('trigonometria', 'Trigonometría'),
-  ('geometria-analitica', 'Geometría analítica'),
-  ('numeros-complejos', 'Números complejos')
+  ('analisis-de-funciones', 'Análisis de funciones'),
+  ('funciones-cuadraticas', 'Funciones cuadráticas'),
+  ('funciones-polinomiales-y-ceros-reales', 'Funciones polinomiales y ceros reales')
 on conflict do nothing;

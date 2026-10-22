@@ -43,8 +43,10 @@ clave pública y por las políticas de seguridad (RLS) de PostgreSQL.
   proyecto (institución, asignatura, docente) y los **nombres completos de los
   integrantes del grupo**.
 - **Menú de temas**: navegación principal hacia los distintos contenidos
-  (Álgebra, Funciones, Exponenciales y logaritmos, Trigonometría, Geometría
-  analítica, Números complejos), con el número de piezas de cada tema.
+  (exponentes y radicales, expresiones racionales, ecuaciones, modelado con
+  ecuaciones, geometría de coordenadas, rectas, funciones, análisis de
+  funciones, funciones cuadráticas, funciones polinomiales y ceros reales),
+  con el número de piezas de cada tema.
 - Catálogo editorial con la pieza destacada, retícula asimétrica (no una
   cuadrícula de tarjetas idénticas), buscador en la cabecera, filtros por
   categoría y por etiqueta, y carga progresiva del listado.
@@ -231,17 +233,18 @@ Todo el contenido de la presentación se edita en **un solo archivo**,
 | --- | --- | --- |
 | `nombre` | Nombre del proyecto | `NOCTURNA` (o `NEXT_PUBLIC_SITE_NAME`) |
 | `tipo` | Subtítulo bajo el nombre | «Archivo audiovisual del curso de Precálculo» |
-| `institucion` | Institución | *marcador: «Institución»* |
+| `institucion` | Institución | Universidad Mariano Galvez de Guatemala · Sede Jalapa |
 | `asignatura` | Asignatura | `Precálculo` |
-| `docente` | Docente | *marcador: «Docente»* |
+| `docente` | Docente | Jose Fernando Marroquin Rosa |
 | `proposito` | Propósito de la página | redactado |
 | `presentacionCurso` | Presentación breve del curso | redactada |
 | `bienvenida` | Mensaje de bienvenida | redactado |
-| `integrantes` | **Nombres completos del grupo** | *marcadores: «Integrante 1…4»* |
-| `temas` | Menú de temas y su categoría | los 6 temas del curso |
+| `integrantes` | **Nombres completos del grupo** | *pendientes de escribir* |
+| `temas` | Menú de temas y su categoría | los 10 temas del curso |
 
-> Los **nombres de los integrantes**, la **institución** y el **docente** están
-> como marcadores de posición: sustitúyelos antes de entregar el proyecto.
+> Lo único que queda por completar son los **nombres de los integrantes**:
+> están en blanco en `src/lib/proyecto.ts`. Mientras tanto, la web muestra un
+> aviso en la sección «El grupo» en lugar de huecos vacíos.
 
 Las categorías de Supabase son los temas del curso
 (`supabase/migrations/0002_categorias_iniciales.sql`). Si ya habías aplicado la

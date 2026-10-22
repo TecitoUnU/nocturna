@@ -30,9 +30,9 @@ const ahora = () => new Date().toISOString();
 const estado = {
   admins: [{ id: randomUUID(), email: ADMIN_EMAIL, created_at: ahora() }],
   categories: [
-    { id: randomUUID(), slug: "algebra", name: "Álgebra", created_at: ahora() },
-    { id: randomUUID(), slug: "trigonometria", name: "Trigonometría", created_at: ahora() },
     { id: randomUUID(), slug: "funciones", name: "Funciones", created_at: ahora() },
+    { id: randomUUID(), slug: "ecuaciones", name: "Ecuaciones", created_at: ahora() },
+    { id: randomUUID(), slug: "rectas", name: "Rectas", created_at: ahora() },
   ],
   videos: [
     {
@@ -55,14 +55,14 @@ const estado = {
     {
       id: "22222222-2222-4222-8222-222222222222",
       youtube_video_id: "abcdefghijk",
-      title: "Circunferencia trigonometrica",
-      slug: "circunferencia-trigonometrica",
-      title_search: "circunferencia trigonometrica",
-      description: "El circulo unitario como punto de partida del bloque.",
+      title: "Ecuaciones de segundo grado",
+      slug: "ecuaciones-de-segundo-grado",
+      title_search: "ecuaciones de segundo grado",
+      description: "Formula cuadratica, discriminante y sus raices.",
       thumbnail_url: null,
       thumbnail_path: null,
-      category: "Trigonometría",
-      tags: ["circunferencia"],
+      category: "Ecuaciones",
+      tags: ["discriminante"],
       status: "published",
       is_featured: false,
       created_at: "2024-02-10T10:00:00.000Z",
@@ -78,7 +78,7 @@ const estado = {
       description: "No debe verse en el catalogo publico.",
       thumbnail_url: null,
       thumbnail_path: null,
-      category: "Álgebra",
+      category: "Rectas",
       tags: ["borrador"],
       status: "draft",
       is_featured: false,

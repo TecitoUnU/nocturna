@@ -164,7 +164,7 @@ try {
     "La portada muestra el video publicado",
   );
   comprobar(
-    htmlInicio.includes("Circunferencia trigonometrica"),
+    htmlInicio.includes("Ecuaciones de segundo grado"),
     "La portada muestra el segundo video publicado",
   );
   comprobar(
@@ -177,7 +177,7 @@ try {
   const htmlBusqueda = await busqueda.text();
   comprobar(
     htmlBusqueda.includes("Dominio y rango de una funcion") &&
-      !htmlBusqueda.includes("Circunferencia trigonometrica"),
+      !htmlBusqueda.includes("Ecuaciones de segundo grado"),
     "La búsqueda por título filtra correctamente",
   );
 
@@ -188,10 +188,10 @@ try {
     "La búsqueda avisa cuando no hay coincidencias",
   );
 
-  const porCategoria = await pedir("/?categoria=Trigonometría");
+  const porCategoria = await pedir("/?categoria=Ecuaciones");
   const htmlCategoria = await porCategoria.text();
   comprobar(
-    htmlCategoria.includes("Circunferencia trigonometrica") &&
+    htmlCategoria.includes("Ecuaciones de segundo grado") &&
       !htmlCategoria.includes("Dominio y rango de una funcion"),
     "El filtro por categoría funciona",
   );
@@ -200,7 +200,7 @@ try {
   const htmlEtiqueta = await porEtiqueta.text();
   comprobar(
     htmlEtiqueta.includes("Dominio y rango de una funcion") &&
-      !htmlEtiqueta.includes("Circunferencia trigonometrica"),
+      !htmlEtiqueta.includes("Ecuaciones de segundo grado"),
     "El filtro por etiqueta funciona",
   );
 
