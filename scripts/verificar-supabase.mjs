@@ -117,15 +117,25 @@ try {
   });
 
   if (respuesta.ok) {
-    anotar(true, "Bucket de miniaturas", "'thumbnails' existe");
-  } else if (respuesta.status === 404) {
+    const bucket = await respuesta.json();
+    anotar(
+      true,
+      "Bucket de miniaturas",
+      `'thumbnails' existe (público: ${bucket.public ? "sí" : "no"})`,
+    );
+  } else {
+    let detalle = `HTTP ${respuesta.status}`;
+    try {
+      const cuerpo = await respuesta.json();
+      detalle = cuerpo.message ?? cuerpo.error ?? detalle;
+    } catch {
+      /* respuesta sin cuerpo JSON */
+    }
     anotar(
       false,
       "Bucket de miniaturas",
-        "no existe: ejecuta las migraciones de supabase/migrations",
+      `${detalle} — ejecuta supabase/storage-miniaturas.sql en el SQL Editor`,
     );
-  } else {
-    anotar(true, "Bucket de miniaturas", `consulta respondida con HTTP ${respuesta.status}`);
   }
 } catch (error) {
   anotar(false, "Bucket de miniaturas", error instanceof Error ? error.message : String(error));
