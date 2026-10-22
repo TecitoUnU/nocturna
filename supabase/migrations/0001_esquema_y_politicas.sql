@@ -9,9 +9,10 @@
 -- El script es idempotente: se puede volver a ejecutar sin romper nada.
 -- ============================================================================
 
--- Extensiones usadas: uuid, búsqueda sin acentos y similitud de trigramas.
+-- Extensiones usadas: uuid y similitud de trigramas.
+-- La búsqueda sin acentos no depende de `unaccent`: se resuelve con
+-- `translate`, que es inmutable y no necesita extensiones.
 create extension if not exists "pgcrypto" with schema extensions;
-create extension if not exists "unaccent" with schema extensions;
 create extension if not exists "pg_trgm" with schema extensions;
 
 -- ---------------------------------------------------------------------------
@@ -62,38 +63,25 @@ create table if not exists public.videos (
 -- Búsqueda: columna normalizada (sin acentos y en minúsculas)
 -- ---------------------------------------------------------------------------
 
--- `unaccent(text)` es STABLE, y las columnas generadas exigen IMMUTABLE.
--- Se envuelve la variante con diccionario, que sí es IMMUTABLE, resolviendo
--- el esquema real de la extensión para no depender del search_path.
-do $$
-declare
-  esquema text;
-begin
-  select n.nspname
-    into esquema
-    from pg_extension e
-    join pg_namespace n on n.oid = e.extnamespace
-   where e.extname = 'unaccent';
-
-  if esquema is null then
-    raise exception 'Falta la extensión unaccent (create extension unaccent with schema extensions)';
-  end if;
-
-  execute format(
-    'create or replace function public.immutable_unaccent(texto text)
-       returns text
-       language sql
-       immutable
-       parallel safe
-     as $f$ select %I.unaccent(%I::regdictionary, texto) $f$',
-    esquema,
-    esquema
-  );
-end $$;
+-- `translate` es IMMUTABLE (a diferencia de `unaccent`, que es STABLE y no
+-- se puede usar en columnas generadas). La tabla de caracteres cubre el
+-- español, que es el idioma del proyecto.
+create or replace function public.quitar_acentos(texto text)
+returns text
+language sql
+immutable
+parallel safe
+as $$
+  select translate(
+    texto,
+    'áàäâãéèëêíìïîóòöôõúùüûñçÁÀÄÂÃÉÈËÊÍÌÏÎÓÒÖÔÕÚÙÜÛÑÇ',
+    'aaaaaeeeeiiiiooooouuuuncAAAAAEEEEIIIIOOOOOUUUUNC'
+  )
+$$;
 
 alter table public.videos
   add column if not exists title_search text
-  generated always as (lower(public.immutable_unaccent(title))) stored;
+  generated always as (lower(public.quitar_acentos(title))) stored;
 
 -- Índice de trigramas para las búsquedas por título (contiene, no prefijo).
 do $$
