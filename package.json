@@ -13,6 +13,7 @@
     "verificar": "node scripts/verificar-supabase.mjs",
     "sql": "node scripts/sql-instalacion.mjs",
     "sql:validar": "node scripts/validar-sql.mjs",
+    "desplegar": "node scripts/desplegar-vercel.mjs",
     "e2e": "node tests/e2e.mjs",
     "test:unit": "tsx --test tests/*.test.ts"
   },
