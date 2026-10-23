@@ -5,7 +5,9 @@ import { Marca } from "./marca";
 
 export function Pie() {
   const anio = new Date().getFullYear();
-  const integrantes = proyecto.integrantes.map((integrante) => integrante.nombre).join(" · ");
+  const integrantes = proyecto.integrantes
+    .map((integrante) => integrante.nombre)
+    .join(" · ");
 
   return (
     <footer className="mt-24 border-t linea bg-noche-950/60">

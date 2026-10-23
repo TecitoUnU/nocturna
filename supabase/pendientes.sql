@@ -58,7 +58,7 @@ create policy "miniaturas_borrado"
 -- funciona pero el login fallará).
 -- ---------------------------------------------------------------------------
 insert into public.admins (email)
-values ('TU_CORREO@gmail.com')
+values ('mloolortiz@gmail.com')
 on conflict (email) do nothing;
 
 -- ---------------------------------------------------------------------------

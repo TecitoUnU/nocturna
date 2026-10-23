@@ -8,8 +8,8 @@
 export interface Integrante {
   /** Nombre completo de la persona integrante del grupo. */
   nombre: string;
-  /** Rol opcional dentro del equipo. */
-  rol?: string;
+  /** Número de carnet de la persona integrante del grupo. */
+  carnet: string;
 }
 
 export interface Tema {
@@ -54,10 +54,12 @@ export const proyecto = {
    * roles son opcionales. Las entradas sin nombre no se muestran en la web.
    */
   integrantes: [
-    { nombre: "", rol: "Coordinación y edición" },
-    { nombre: "", rol: "Grabación y guion" },
-    { nombre: "", rol: "Material audiovisual" },
-    { nombre: "", rol: "Web y documentación" },
+    { nombre: "Miguel Angel Lool Oritz", carnet: "0907-25-13633" },
+    { nombre: "Daniela Fernanda Flores Ortiz", carnet: "0907-26-18311" },
+    { nombre: "Miguel Esteban Castellanos Castañeda", carnet: "0907-26-19598" },
+    { nombre: "José Emilio Valenzuela Lucero", carnet: "0907-25-18601" },
+    { nombre: "Angel Josias David Sequén Aguirre", carnet: "0907-26-15610" },
+    { nombre: "Teresita Abigail Carias Zeceña", carnet: "0907-26-29310" },
   ] satisfies Integrante[],
 
   /** Menú de temas: la navegación principal hacia los contenidos. */
