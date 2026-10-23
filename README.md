@@ -242,12 +242,11 @@ Todo el contenido de la presentación se edita en **un solo archivo**,
 | `proposito` | Propósito de la página | redactado |
 | `presentacionCurso` | Presentación breve del curso | redactada |
 | `bienvenida` | Mensaje de bienvenida | redactado |
-| `integrantes` | **Nombres completos del grupo** | *pendientes de escribir* |
+| `integrantes` | **Nombres completos del grupo** + carnet | completado (6 integrantes) |
 | `temas` | Menú de temas y su categoría | los 10 temas del curso |
 
-> Lo único que queda por completar son los **nombres de los integrantes**:
-> están en blanco en `src/lib/proyecto.ts`. Mientras tanto, la web muestra un
-> aviso en la sección «El grupo» en lugar de huecos vacíos.
+> La lista de integrantes está completa; los carnets se muestran junto a cada
+> nombre en la sección *El grupo* de la portada y en el pie de página.
 
 Las categorías de Supabase son los temas del curso
 (`supabase/migrations/0002_categorias_iniciales.sql`). Si ya habías aplicado la
