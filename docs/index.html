@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NOCTURNA · Archivo audiovisual del curso de Precálculo</title>
+  <meta name="description" content="NOCTURNA es el archivo audiovisual del curso de Precálculo: catálogo propio, buscador, fichas de video con reproductor integrado y panel privado de administración." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --noche-950: #05050a;
+      --noche-900: #09090f;
+      --noche-800: #11111a;
+      --noche-700: #171722;
+      --hueso: #f4f0e6;
+      --hueso-tenue: #a8a2b6;
+      --hueso-oscuro: #6f6a7d;
+      --acento: #a855f7;
+      --acento-tenue: #cbb6ff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--noche-900);
+      color: var(--hueso);
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--acento); color: #0a0a11; }
+
+    .display { font-family: "Instrument Serif", ui-serif, Georgia, serif; font-weight: 400; letter-spacing: -0.015em; line-height: 1.02; }
+    .kicker { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; }
+
+    .contenedor { max-width: 72rem; margin: 0 auto; padding: 0 1.25rem; }
+    @media (min-width: 768px) { .contenedor { padding: 0 2rem; } }
+
+    header { border-bottom: 1px solid color-mix(in srgb, var(--hueso) 12%, transparent); backdrop-filter: blur(12px); background: color-mix(in srgb, var(--noche-900) 85%, transparent); position: sticky; top: 0; z-index: 40; }
+    header .barra { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1rem; }
+    .marca { display: inline-flex; align-items: center; gap: 0.6rem; }
+    .marca .simbodo { display: inline-block; width: 1.7rem; height: 1.7rem; color: var(--hueso); }
+    .marca .nombre { font-family: "Instrument Serif", ui-serif, Georgia, serif; font-size: 1.25rem; letter-spacing: 0.18em; text-transform: uppercase; }
+    nav a { font-size: 0.85rem; color: var(--hueso-tenue); transition: color 180ms ease; }
+    nav a:hover { color: var(--hueso); }
+    nav { display: flex; gap: 1.5rem; }
+
+    .hero { padding: 4rem 0 3rem; }
+    @media (min-width: 768px) { .hero { padding: 6rem 0 4rem; } }
+    .hero .kicker { color: var(--acento); }
+    .hero h1 { font-size: clamp(2.75rem, 8vw, 6.5rem); margin: 1.25rem 0 0; }
+    .hero .lema { font-size: clamp(1.1rem, 2.5vw, 1.75rem); color: var(--acento-tenue); font-style: italic; margin-top: 0.75rem; }
+    .hero .proposito { max-width: 40rem; margin-top: 1.75rem; color: var(--hueso-tenue); font-size: 1.05rem; line-height: 1.7; }
+    .bienvenida { margin-top: 2rem; max-width: 46rem; border-left: 2px solid var(--acento); background: color-mix(in srgb, var(--noche-800) 85%, transparent); padding: 1.5rem 1.75rem; }
+    .bienvenida .etiqueta { color: var(--acento); }
+    .bienvenida p { margin: 0.75rem 0 0; font-size: 1.05rem; line-height: 1.7; color: var(--hueso); }
+    .cta { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .boton { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 500; transition: all 180ms ease; border: 1px solid color-mix(in srgb, var(--hueso) 22%, transparent); color: var(--hueso); }
+    .boton:hover { border-color: var(--acento); color: var(--acento-tenue); }
+    .boton.acento { background: var(--acento); color: #0a0a11; border-color: var(--acento); }
+    .boton.acento:hover { background: var(--acento-tenue); border-color: var(--acento-tenue); }
+
+    section { padding: 4rem 0; }
+    @media (min-width: 768px) { section { padding: 5rem 0; } }
+    .seccion-titulo { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .seccion-titulo .linea { height: 1px; width: 2.5rem; background: var(--acento); }
+    .seccion-titulo h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); margin: 0; }
+    .seccion-titulo p { margin: 0.25rem 0 0; color: var(--hueso-tenue); font-size: 0.95rem; }
+
+    .tarjeta { border-top: 1px solid color-mix(in srgb, var(--hueso) 12%, transparent); padding-top: 1.25rem; transition: border-color 180ms ease; }
+    .tarjeta:hover { border-color: var(--acento); }
+    .tarjeta .num { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hueso-oscuro); }
+    .tarjeta h3 { font-size: 1.35rem; margin: 0.5rem 0 0; }
+    .tarjeta p { margin: 0.6rem 0 0; color: var(--hueso-tenue); font-size: 0.9rem; line-height: 1.6; }
+    .tarjeta .pie { margin-top: 0.9rem; font-size: 0.75rem; color: var(--hueso-oscuro); }
+    .grid-temas { display: grid; gap: 2rem 1.5rem; grid-template-columns: 1fr; }
+    @media (min-width: 640px) { .grid-temas { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .grid-temas { grid-template-columns: 1fr 1fr 1fr; } }
+
+    .ficha { background: color-mix(in srgb, var(--noche-800) 90%, transparent); border: 1px solid color-mix(in srgb, var(--hueso) 10%, transparent); padding: 1.75rem; border-radius: 2px; }
+    .ficha dl { margin: 0; }
+    .ficha .fila { display: flex; justify-content: space-between; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid color-mix(in srgb, var(--hueso) 10%, transparent); }
+    .ficha .fila:last-child { border-bottom: 0; }
+    .ficha dt { color: var(--hueso-oscuro); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; }
+    .ficha dd { margin: 0; text-align: right; font-size: 0.9rem; }
+
+    .grupo { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    @media (min-width: 640px) { .grupo { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .grupo { grid-template-columns: 1fr 1fr 1fr; } }
+    .integrante { border-left: 2px solid color-mix(in srgb, var(--hueso) 12%, transparent); padding-left: 0.9rem; }
+    .integrante .nombre { font-size: 1rem; }
+    .integrante .carnet { font-family: "Inter", ui-monospace, monospace; font-size: 0.75rem; color: var(--hueso-oscuro); margin-top: 0.25rem; letter-spacing: 0.08em; }
+
+    .stack { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    @media (min-width: 768px) { .stack { grid-template-columns: 1fr 1fr; } }
+    .stack .item { border-top: 1px solid color-mix(in srgb, var(--hueso) 12%, transparent); padding-top: 1rem; }
+    .stack .item h3 { font-size: 1rem; margin: 0; }
+    .stack .item p { margin: 0.4rem 0 0; color: var(--hueso-tenue); font-size: 0.85rem; line-height: 1.6; }
+
+    footer { border-top: 1px solid color-mix(in srgb, var(--hueso) 12%, transparent); padding: 2.5rem 0; color: var(--hueso-oscuro); font-size: 0.8rem; }
+
+    .nota { font-size: 0.8rem; color: var(--hueso-oscuro); margin-top: 1.5rem; line-height: 1.6; }
+    .nota strong { color: var(--hueso-tenue); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="contenedor">
+      <div class="barra">
+        <a href="#presentacion" class="marca">
+          <svg class="simbodo" viewBox="0 0 64 64" role="img" aria-label="Símbodo de NOCTURNA" focusable="false">
+            <path fill-rule="evenodd" d="M31 13a19 19 0 1 0 0 38 19 19 0 0 0 0-38Zm7-5a19 19 0 1 1 0 38 19 19 0 0 1 0-38Z" fill="currentColor" />
+            <circle cx="45" cy="45" r="5.5" fill="var(--acento)" />
+          </svg>
+          <span class="nombre">NOCTURNA</span>
+        </a>
+        <nav>
+          <a href="#presentacion">Presentación</a>
+          <a href="#temas">Temas</a>
+          <a href="#grupo">Grupo</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="presentacion" class="hero">
+      <div class="contenedor">
+        <p class="kicker" style="color: var(--acento);">Universidad Mariano Galvez de Guatemala · Sede Jalapa · Precálculo</p>
+        <h1 class="display">NOCTURNA</h1>
+        <p class="lema">Archivo audiovisual del curso de Precálculo</p>
+        <p class="proposito">
+          Esta página es la memoria audiovisual del curso: reúne en un mismo lugar las explicaciones, los ejercicios resueltos y las grabaciones de clase de Precálculo. Cada pieza tiene su ficha, su tema y su fecha, así que el material se puede consultar y citar cuando haga falta, sin depender de archivos sueltos ni de enlaces que se pierden.
+        </p>
+        <div class="bienvenida">
+          <p class="etiqueta kicker">Bienvenida</p>
+          <p>Bienvenida, bienvenido. Si buscas un tema concreto, empieza por el buscador de la web; si prefieres recorrer el material poco a poco, elige un tema en el menú de abajo y sigue desde ahí. Todos los videos están alojados en YouTube y el catálogo, los textos y las fichas son de este proyecto.</p>
+        </div>
+        <div class="cta">
+          <a class="boton acento" href="https://nocturna-mu.vercel.app">Ir a la aplicación →</a>
+          <a class="boton" href="https://nocturna-mu.vercel.app/studio">Panel de administración</a>
+          <a class="boton" href="https://github.com/TecitoUnU/nocturna">Código en GitHub</a>
+        </div>
+
+        <div style="margin-top: 3.5rem; display: grid; gap: 2rem; grid-template-columns: 1fr;">
+          <div class="ficha">
+            <h2 class="display" style="font-size: 1.5rem; margin: 0 0 1rem;">El curso de Precálculo</h2>
+            <p style="color: var(--hueso-tenue); margin: 0 0 1.5rem; line-height: 1.7;">
+              Precálculo es la etapa que prepara el cálculo. Reúne álgebra, funciones, trigonometría, números complejos y geometría analítica, y trabaja sobre las herramientas que después sostienen las derivadas y las integrales: factorizar, resolver, simplificar, representar y relacionar. En este proyecto el curso se cuenta también en vídeo, con el material grabado y ordenado por temas.
+            </p>
+            <dl>
+              <div class="fila"><dt>Proyecto</dt><dd>NOCTURNA</dd></div>
+              <div class="fila"><dt>Asignatura</dt><dd>Precálculo</dd></div>
+              <div class="fila"><dt>Institución</dt><dd>Universidad Mariano Galvez de Guatemala · Sede Jalapa</dd></div>
+              <div class="fila"><dt>Docente</dt><dd>Jose Fernando Marroquin Rosa</dd></div>
+              <div class="fila"><dt>Alojamiento del video</dt><dd>YouTube (reproductor oficial)</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="temas">
+      <div class="contenedor">
+        <div class="seccion-titulo">
+          <span class="linea"></span>
+          <div>
+            <p class="kicker" style="color: var(--acento);">Menú</p>
+            <h2 class="display">Los temas del curso</h2>
+            <p>Cada tema reúne las piezas del catálogo que le corresponden; el enlace lleva al catálogo filtrado.</p>
+          </div>
+        </div>
+        <div class="grid-temas">
+          <div class="tarjeta"><span class="num">01</span><h3>Exponentes y radicales</h3><p>Potencias, raíces y las reglas que permiten manipularlos sin perder de vista las restricciones del dominio.</p><span class="pie">→ Ver piezas</span></div>
+          <div class="tarjeta"><span class="num">02</span><h3>Expresiones racionales</h3><p>Fracciones algebraicas: simplificación, dominio y los valores que quedan fuera de la expresión.</p><span class="pie">→ Ver piezas</span></div>
+          <div class="tarjeta"><span class="num">03</span><h3>Ecuaciones</h3><p>Ecuaciones de primer y segundo grado, y todo lo que se puede despejar sin perder soluciones.</p><span class="pie">→ Ver piezas</span></div>
+          <div class="tarjeta"><span class="num">04</span><h3>Modelado con ecuaciones</h3><p>Pasar de un problema con enunciado a una ecuación, y comprobar que la solución significa algo.</p><span class="pie">→ Ver piezas</span></div>
+          <div class="tarjeta"><span class="num">05</span><h3>Geometría de coordenadas</h3><p>El plano cartesiano como territorio: distancia, punto medio y circunferencias.</p><span class="pie">→ Ver piezas</span></div>
+          <div class="tarjeta"><span class="num">06</span><h3>Rectas</h3><p>Ecuaciones de la recta, pendientes y ángulos entre rectas: la geometría con coordenadas.</p><span class="pie">→ Ver piezas</span></div>
+          <div class="tarjeta"><span class="num">07</span><h3>Funciones</h3><p>Dominio, rango, inyectividad, composición y transformaciones: la idea central del curso.</p><span class="pie">→ Ver piezas</span></div>
+          <div class="tarjeta"><span class="num">08</span><h3>Análisis de funciones</h3><p>Variaciones, límites y comportamiento asintótico: cómo se lee una función de largo.</p><span class="pie">→ Ver piezas</span></div>
+          <div class="tarjeta"><span class="num">09</span><h3>Funciones cuadráticas</h3><p>Parábolas, vértice, eje de simetría y el papel del discriminante.</p><span class="pie">→ Ver piezas</span></div>
+          <div class="tarjeta"><span class="num">10</span><h3>Funciones polinomiales y ceros reales</h3><p>Gráficas de polinomios, teorema del factor y búsqueda de ceros reales.</p><span class="pie">→ Ver piezas</span></div>
+        </div>
+        <p class="nota"><strong>Nota:</strong> cada tema enlaza al catálogo filtrado por esa categoría. La lista completa con las piezas publicadas está en la aplicación viva.</p>
+      </div>
+    </section>
+
+    <section id="grupo">
+      <div class="contenedor">
+        <div class="seccion-titulo">
+          <span class="linea"></span>
+          <div>
+            <p class="kicker" style="color: var(--acento);">El grupo</p>
+            <h2 class="display">Integrantes</h2>
+            <p>Este proyecto es obra del siguiente equipo de integrantes del curso de Precálculo.</p>
+          </div>
+        </div>
+        <div class="grupo">
+          <div class="integrante"><p class="nombre">Miguel Angel Lool Oritz</p><p class="carnet">0907-25-13633</p></div>
+          <div class="integrante"><p class="nombre">Daniela Fernanda Flores Ortiz</p><p class="carnet">0907-26-18311</p></div>
+          <div class="integrante"><p class="nombre">Miguel Esteban Castellanos Castañeda</p><p class="carnet">0907-26-19598</p></div>
+          <div class="integrante"><p class="nombre">José Emilio Valenzuela Lucero</p><p class="carnet">0907-25-18601</p></div>
+          <div class="integrante"><p class="nombre">Angel Josias David Sequén Aguirre</p><p class="carnet">0907-26-15610</p></div>
+          <div class="integrante"><p class="nombre">Teresita Abigail Carias Zeceña</p><p class="carnet">0907-26-29310</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="contenedor">
+        <div class="seccion-titulo">
+          <span class="linea"></span>
+          <div>
+            <p class="kicker" style="color: var(--acento);">Tecnología</p>
+            <h2 class="display">Cómo está hecha</h2>
+            <p>Todo funciona con presupuesto cero: planes gratuitos y herramientas open source.</p>
+          </div>
+        </div>
+        <div class="stack">
+          <div class="item"><h3>Next.js 16 · TypeScript</h3><p>Frontend y backend en un mismo proyecto. App Router, Server Components y Server Actions.</p></div>
+          <div class="item"><h3>Supabase (Postgres + Auth + Storage)</h3><p>Plan Free: 500 MB de base de datos, 1 GB de almacenamiento, 50 000 usuarios activos mensuales. Row Level Security para que el catálogo público sólo lea lo publicado.</p></div>
+          <div class="item"><h3>YouTube (videos no listados)</h3><p>Único servicio de alojamiento y reproducción. Se usa el reproductor oficial por iframe; no se descargan ni retransmiten videos.</p></div>
+          <div class="item"><h3>Vercel (Hobby)</h3><p>Despliegue gratuito con subdominio *.vercel.app. Cabeceras de seguridad, CSP con nonce por petición y Content-Security-Policy que sólo permite el reproductor de YouTube.</p></div>
+          <div class="item"><h3>Diseño editorial</h3><p>Fondo negro azulado, texto blanco cálido, un único acento violeta eléctrico, Instrument Serif + Geist. Retícula asimétrica, sin cuadrícula genérica de tarjetas idénticas.</p></div>
+          <div class="item"><h3>Seguridad</h3><p>Validación de enlaces de YouTube en el servidor, sin HTML/JS arbitrario, políticas RLS en PostgreSQL, sin clave service_role en el cliente.</p></div>
+        </div>
+        <p class="nota"><strong>Nota:</strong> los videos no listados de YouTube no son privados ni están protegidos con contraseña: cualquiera que conozca el enlace puede verlos y compartirlos. NOCTURNA no promete lo contrario.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="contenedor">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem;">
+        <div>
+          <p style="margin: 0; color: var(--hueso);">NOCTURNA · Archivo audiovisual del curso de Precálculo</p>
+          <p style="margin: 0.4rem 0 0;">Universidad Mariano Galvez de Guatemala · Sede Jalapa · Precálculo · Jose Fernando Marroquin Rosa</p>
+          <p style="margin: 0.4rem 0 0;">Grupo: Miguel Angel Lool Oritz · Daniela Fernanda Flores Ortiz · Miguel Esteban Castellanos Castañeda · José Emilio Valenzuela Lucero · Angel Josias David Sequén Aguirre · Teresita Abigail Carias Zeceña</p>
+        </div>
+        <div style="display: flex; gap: 1.25rem; align-items: center;">
+          <a href="https://nocturna-mu.vercel.app" style="color: var(--hueso-tenue);">Aplicación</a>
+          <a href="https://nocturna-mu.vercel.app/studio" style="color: var(--hueso-tenue);">Panel</a>
+          <a href="https://github.com/TecitoUnU/nocturna" style="color: var(--hueso-tenue);">Código</a>
+        </div>
+      </div>
+      <p style="margin-top: 1.5rem;">© 2026 NOCTURNA · Los videos se alojan en YouTube y se reproducen con su reproductor oficial.</p>
+    </div>
+  </footer>
+</body>
+</html>
+EOF
