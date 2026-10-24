@@ -6,6 +6,11 @@ reproductor integrado y un panel privado de administración.
 🌐 **Desplegada en producción**: <https://nocturna-mu.vercel.app>
 (plan Hobby de Vercel, subdominio gratuito, sin dominio comprado)
 
+📄 **Presentación del proyecto (GitHub Pages)**: <https://tecitounu.github.io/nocturna/>
+(portada estática con nombre, propósito, equipo, temas y enlace a la aplicación)
+
+📦 **Repositorio**: <https://github.com/TecitoUnU/nocturna>
+
 Todo el proyecto funciona con **presupuesto cero** usando servicios con plan
 gratuito:
 
